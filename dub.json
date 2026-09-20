@@ -19,7 +19,7 @@
         "src/**.d"
       ],
       "dependencies": {"runtime": {"path": "runtime"}},
-      "dflags": ["-i=.", "-i=std"],
+      "dflags": ["-conf=ldc2.conf.wasm", "-i=.", "-i=std"],
       "versions": [
         "WASM",
         "GL_Batching",
@@ -33,12 +33,36 @@
         "src/**.d"
       ],
       "dependencies": {"runtime": {"path": "runtime"}},
-      "dflags": ["-i=.", "-i=std", "-L=-allow-undefined"],
+      "dflags": ["-conf=ldc2.conf.wasm", "-i=.", "-i=std", "-L=-allow-undefined"],
       "versions": [
         "WASM",
         "GL_Batching",
         "InputBackendWASM"
       ]
+    },
+    {
+      "name": "linux",
+      "platforms": ["linux"],
+      "sourceFiles": [
+        "src/**.d"
+      ],
+      "dependencies": {
+        "bindbc-sdl": "~>0.19.0"
+      },
+      "lflags": [
+        "-lGL"
+      ],
+      "versions": [
+        "BindBC",
+        "DirectGL",
+        "GL_32",
+        "GL_Batching",
+        "SDL_Mixer",
+        "InputBackendSDL"
+      ],
+      "subConfigurations": {
+        "bindbc-sdl": "dynamicBC"
+      }
     },
     {
       "name": "win32",

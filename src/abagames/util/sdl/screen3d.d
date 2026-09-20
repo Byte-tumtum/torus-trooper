@@ -9,8 +9,8 @@ version(BindBC) {
   import std.conv;
   import std.stdio;
   import std.string;
+  import core.stdc.stdio;
   import bindbc.sdl;
-  import bindbc.opengl;
 }
 import abagames.util.gl;
 import abagames.util.vector;
@@ -64,11 +64,15 @@ version(GL_32) {
       throw new SDLInitFailedException("Unable to create SDL screen: " ~ to!string(SDL_GetError()));
     }
     context = SDL_GL_CreateContext(window);
+version(DirectGL) {
+    // OpenGL is linked directly against the system libGL; nothing to load.
+} else {
     auto glStatus = loadOpenGL();
     if (!isOpenGLLoaded) {
       throw new SDLInitFailedException("Unable to load OpenGL");
     }
     writeln("OpenGL Status: ", glStatus);
+}
     GL.init();
     GL.viewport(0, 0, width, height);
     GL.clearColor(0.0f, 0.0f, 0.0f, 0.0f);
